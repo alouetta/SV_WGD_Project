@@ -1,0 +1,14 @@
+# Instructions for Genome scan of Structural Variant data
+
+## Introduction
+This document outlines the steps taken to identify structural variants that may be under selection in tetraploid Arabidopsis arenosa individuals. 
+
+### 1) Copy and check the data
+cp WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz ~/Data
+
+#### Check sample number and variant number:
+
+bcftools query -l WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz | wc -l
+149
+bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz | wc -l
+99187
