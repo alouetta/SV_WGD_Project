@@ -1,27 +1,26 @@
-# Data preparation of SNP VCF
-Below are the steps to follow to process the SNP VCF file before doing population genetics analyses. All steps were carried out on the HPC. If a package is required such as bcftools, instructions for loading the correct module are given. For checking variant numbers, sample numbers etc. the expected number is given in brackets for the input data we used.
+# Filtering and indexing SNP VCF for Popultion Analysis
+The instructions below are for filtering and indexing the SNP VCF data prior to population genetic analysis. The HPC is used and so the commands for loading the required packages are given. Where numbers of samples, variants etc. are checked, the expected number using the specified input data is given in brackets.
 
 **Input data == wgd_arenosa.fourfold.v2.vcf.gz**
 
-**Packages used == bcftools v 1.18**
+**Packages == bcftools v 1.18**
 
 **Output data == wgd_arenosa_bcf.4_pruned.vcf**
 
-
-1) Create new directory in homedrive and copy data over
+1) Creating new directory in homedrive and copying data over:
 
 - mkdir Data
+
 - cp wgd_arenosa.fourfold.v2.vcf.gz ~/Data
 
-2) Check number of samples in file, number of variants and mean depth
+3) Check number of samples in file, number of variants and mean depth
 
-- Load bcftools module onto HPC: module load bcftools-uoneasy/1.18-GCC-13.2.0
+- First, load bcftools module onto HPC : module load bcftools-uoneasy/1.18-GCC-13.2.0
 
 - Sample number:
 bcftools query -l wgd_arenosa.fourfold.v2.vcf.gz | wc -l
 
 (159)
-
 - Variant number
 bcftools view -H wgd_arenosa.fourfold.v2.vcf.gz | wc -L
 
@@ -32,13 +31,13 @@ bcftools query -f '[%DP\t]\n' remove_zeroDPs_wgd_arenosa.vcf.gz | awk '{sum += $
 
 (34.6198)
 
-3) Create an index file 
+2) Create an index file 
 
 - Load htslib on to HPC: module load htslib-uoneasy/1.18-GCC-13.2.0
 
 - tabix -p vcf wgd_arenosa.fourfold.filtered.vcf.gz
 
-4) Filter vcf for depth<10
+3) Filter vcf for depth<10
 
 - bcftools filter -S . -e 'FORMAT/DP<10' -Oz -o wgd_arenosa.fourfold.DP10.vcf.gz Data/wgd_arenosa.fourfold.v2.vcf.gz
 
@@ -46,14 +45,15 @@ bcftools query -f '[%DP\t]\n' remove_zeroDPs_wgd_arenosa.vcf.gz | awk '{sum += $
 
 (3232322)
 
-5) Filter for missingness <0.1 
+4) Filter for missingness <0.1 
 
 - bcftools filter -i 'F_MISSING < 0.1' -Oz -o wgd_arenosa.fourfold.DP10.MISS10vcf.gz Data/wgd_arenosa.fourfold.DP10.vcf.gz
 
 - Check variant number: bcftools view -H wgd_arenosa.fourfold.DP10.MISS10vcf.gz | wc -l
+
 (471366)
 
-6) Pruning for linkage
+5) Pruning for linkage
 
 - Convert vcf to a bcf file : bcftools view wgd_arenosa.fourfold.DP10.MISS10vcf.gz -O b -o wgd_arenosa.fourfold.DP10.MISS10.bcf
 
@@ -65,6 +65,6 @@ bcftools query -f '[%DP\t]\n' remove_zeroDPs_wgd_arenosa.vcf.gz | awk '{sum += $
 
 (48631)
 
-7) Download data to use in R etc:
-   
+6) Download data to use in R etc.
 scp username@hpclogin02.ada.nottingham.ac.uk:/gpfs01/home/username/Data/wgd_arenosa_bcf.4_pruned.vcf ./OneDrive/Adaptation_to\ polyploidy_project 
+
