@@ -41,9 +41,15 @@ This script creates a list of the A.thaliana and A.lyrata orthologs for the A.ar
 			   iv)Scantools_lyrata_orthos_top20_5kb.txt**
 
 
+3)  Plot Fst results
 
+The following script was used for the Fst plots in the report.
 
+**Script == Fst_plotting.R**
 
+**Package used == R v4.4**
+
+**Input data == DIPTET_WS1_MS1_BPM.txt**
 
 
 
