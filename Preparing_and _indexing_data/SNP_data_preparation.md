@@ -5,6 +5,8 @@ Below are the steps to follow to process the SNP VCF file before doing populatio
 
 **Packages used == bcftools v 1.18**
 
+**Output data == wgd_arenosa_bcf.4_pruned.vcf**
+
 
 1) Create new directory in homedrive and copy data over
 
