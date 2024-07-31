@@ -3,10 +3,13 @@ Below are the steps to follow to process the SV VCF file before genome acanning.
 
 **Input data == WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz**
 
+**Output data == WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP_miss_poly.vcf**
+
 **Packages used == bcftools v 1.18**
 
 
 1) Copying structural variant VCF over to ~/Data
+   
 cp WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz ~/Data
 
 2) Check number of samples and variants in VCF
