@@ -8,8 +8,8 @@ To infer a phylogenetic network from a vcf file of our population data we first 
 
 - Labels denoting diploid or tetraploid for each population were added in "Preview" using the excel file WGD_samples as a guide
 
-Script == wgd_arenosa_Nei_matrix.R
+**Script == wgd_arenosa_Nei_matrix.R**
 
-Input file == wgd_arenosa.fourfold_filtered_pruned.vcf
+**Input file == wgd_arenosa.fourfold_filtered_pruned.vcf**
 
-Output file == WGD_arenosa_Neis_distance.dst
+**Output file == WGD_arenosa_Neis_distance.dst**
