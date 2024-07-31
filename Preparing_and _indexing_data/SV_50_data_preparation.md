@@ -1,4 +1,10 @@
 # Preparation of SV VCF for genome scanning
+Below are the steps to follow to process the SV VCF file before genome acanning. All steps were carried out on the HPC. If a package is required such as bcftools, instructions for loading the correct module are given. For checking variant numbers, sample numbers etc. the expected number is given in brackets for the input data we used.
+
+**Input data == WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz**
+
+**Packages used == bcftools v 1.18**
+
 
 1) Copying structural variant VCF over to ~/Data
 cp WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz ~/Data
@@ -8,13 +14,17 @@ cp WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz ~/Data
 - First, load bcftools module onto HPC using load bcftools: module load bcftools-uoneasy/1.18-GCC-13.2.0
 
 - Sample number:
-bcftools query -l WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz | wc -l 
-149
+bcftools query -l WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz | wc -l
+
+(149)
+
 - Variant number:
 bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf.gz | wc -L
-99187
 
-3) Change ID in header 
+(99187)
+
+3) Change ID in header
+Header was in still in SNP format so was shortened:
 
 bcftools annotate --set-id '%CHROM\_%POS\_%INFO/SVTYPE\_%INFO/SVLEN' -o 
 WGD_WCarp_all_SV50_temp.vcf WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf
@@ -31,7 +41,8 @@ WGD_WCarp_all_SV50_temp.vcf WGD_WCarp_all_SV50_norm_rmdup_AN_AC.vcf
 
 - Check variant number:
 bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP.vcf | wc -l
-99187
+
+(99187)
 
 6) Filter for missingness <0.2
 
@@ -39,7 +50,8 @@ bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP.vcf | wc -l
 
 - Check variant number: 
 bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP_miss.vcf | wc -l
-33805
+
+(33805)
 
 7) Filter for samples where ac = 0 or equal to an i.e. leaving only polymorphic variants
 
@@ -47,7 +59,9 @@ bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP_miss.vcf | wc -l
 
 - Check variant no:
 bcftools view -H WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP_miss_poly.vcf | wc -l
-21013
 
-8) Download data to use in R etc.
-scp mbxvm2@hpclogin02.ada.nottingham.ac.uk:/gpfs01/home/mbxvm2/Data/WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP_miss_poly.vcf ./OneDrive/Adaptation_to\ polyploidy_project 
+(21013)
+
+8) Download data to use in R etc:
+   
+scp username@hpclogin02.ada.nottingham.ac.uk:/gpfs01/home/username/Data/WGD_WCarp_all_SV50_norm_rmdup_AN_AC_DP_miss_poly.vcf ./OneDrive/Adaptation_to\ polyploidy_project 
